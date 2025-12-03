@@ -18,7 +18,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     AppDatabase.class,
                     "breadhub-db"
-            ).allowMainThreadQueries().build();   // TEMP shortcut for class projects
+            ).allowMainThreadQueries().build();
         }
         return INSTANCE;
     }

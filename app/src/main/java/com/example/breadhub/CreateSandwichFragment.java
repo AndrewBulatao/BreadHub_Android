@@ -32,12 +32,11 @@ public class CreateSandwichFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_sandwhich, container, false);
 
-        // Fetching Widgets
+        // Widgets
         Spinner spinner = view.findViewById(R.id.sandwichTypeSpinner);
         Button addRecipeBtn = view.findViewById(R.id.addRecipeBtn);
         Button goBackButton = view.findViewById(R.id.goBackBtn);
         EditText sandwichNameInput = view.findViewById(R.id.sandwichNameInput);
-        EditText sandwichIngredientsInput = view.findViewById(R.id.sandwichIngredientsInput);
 
         LinearLayout proteinContainer = view.findViewById(R.id.proteinContainer);
         EditText proteinInput = proteinContainer.findViewById(R.id.proteinQues);
@@ -55,7 +54,7 @@ public class CreateSandwichFragment extends Fragment {
         EditText sauceInput = sauceContainer.findViewById(R.id.sauceQues);
         Button addSauceBtn = view.findViewById(R.id.addSauceBtn);
 
-        // Add database
+        // Database
         AppDatabase db = AppDatabase.getInstance(requireContext());
 
         // Ensure default sandwich types exist
@@ -65,7 +64,6 @@ public class CreateSandwichFragment extends Fragment {
                 String[] defaultTypes = {"Sandwich", "Subs/Hoagies", "Bánh mì", "Panini", "Burger"};
                 for (String tName : defaultTypes) {
                     SandwichType t = new SandwichType(tName);
-                    t.name = tName;
                     db.appDao().insertType(t);
                 }
                 types = db.appDao().getAllTypes();
@@ -86,25 +84,52 @@ public class CreateSandwichFragment extends Fragment {
             });
         }).start();
 
-        // TODO: Make buttons add ingredients to databse
-        // Add recipe
-        addRecipeBtn.setOnClickListener(v -> {
-            if (getActivity() != null){
-                System.out.println("TEKSLJDSFKL");
-            }
-        });
-
-
+        // Set add buttons
         addProteinBtn.setOnClickListener(createAddListener(proteinContainer, proteinInput));
         addVeggieBtn.setOnClickListener(createAddListener(veggieContainer, veggieInput));
         addCheeseBtn.setOnClickListener(createAddListener(cheeseContainer, cheeseInput));
         addSauceBtn.setOnClickListener(createAddListener(sauceContainer, sauceInput));
 
+        // Add recipe to database
+        addRecipeBtn.setOnClickListener(v -> {
+            String name = sandwichNameInput.getText().toString().trim();
+            int typePosition = spinner.getSelectedItemPosition();
+
+            if (name.isEmpty()) return;
+
+            new Thread(() -> {
+                List<SandwichType> types = db.appDao().getAllTypes();
+                SandwichType selectedType = types.get(typePosition);
+
+                // Collect ingredients
+                List<String> proteins = getIngredientsFromContainer(proteinContainer);
+                List<String> veggies = getIngredientsFromContainer(veggieContainer);
+                List<String> cheeses = getIngredientsFromContainer(cheeseContainer);
+                List<String> sauces = getIngredientsFromContainer(sauceContainer);
+
+                String combinedIngredients = String.join(", ", proteins) + "; "
+                        + String.join(", ", veggies) + "; "
+                        + String.join(", ", cheeses) + "; "
+                        + String.join(", ", sauces);
+
+                // Create and insert sandwich
+                Sandwich sandwich = new Sandwich(selectedType.id, name, combinedIngredients);
+                db.appDao().insertSandwich(sandwich);
+
+                // Clear UI
+                requireActivity().runOnUiThread(() -> {
+                    sandwichNameInput.setText("");
+                    proteinContainer.removeAllViews();
+                    veggieContainer.removeAllViews();
+                    cheeseContainer.removeAllViews();
+                    sauceContainer.removeAllViews();
+                });
+            }).start();
+        });
 
         // Go back
         goBackButton.setOnClickListener(v -> {
             if (getActivity() != null) {
-                // Pop the current fragment off the back stack to return to TitleFragment
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
@@ -112,7 +137,7 @@ public class CreateSandwichFragment extends Fragment {
         return view;
     }
 
-    // Helper function: Sets the textboxes to ""
+    // Helper: Add ingredient from EditText to container
     private View.OnClickListener createAddListener(LinearLayout container, EditText input) {
         return v -> {
             String text = input.getText().toString().trim();
@@ -124,5 +149,16 @@ public class CreateSandwichFragment extends Fragment {
             }
         };
     }
-}
 
+    // Helper: Get all TextViews from container
+    private List<String> getIngredientsFromContainer(LinearLayout container) {
+        List<String> ingredients = new ArrayList<>();
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+            if (child instanceof TextView) {
+                ingredients.add(((TextView) child).getText().toString());
+            }
+        }
+        return ingredients;
+    }
+}
