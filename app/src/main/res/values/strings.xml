@@ -1,0 +1,54 @@
+<resources>
+
+    <!--Main Title string-->
+    <string name="app_name">BreadHub</string>
+    <string name="mainDescription">
+        Welcome to BreadHub where you can create and organize your recipes for
+        sandwiches,subs/hoagies, bánh mì, panini, and burgers!
+    </string>
+    <string name="createButtText"> Create Sandwich Recipe!</string>
+    <string name="viewButtText">View Recipes!</string>
+
+    <!--Sandwich Strings-->
+    <string name="proteinText">Protein:</string>
+    <string name="veggieText">Vegetables:</string>
+    <string name="cheeseText">Cheese:</string>
+    <string name="sauceText">Sauce:</string>
+
+    <string name="proteinQues">Enter Protein</string>
+    <string name="veggieQues">Enter Vegetables</string>
+    <string name="cheeseQues">Enter Cheese</string>
+    <string name="sauceQues">Enter Sauce</string>
+
+    <!-- Reused these strings for search string-->
+    <string name="sandwichText">Select Sandwich Type!</string>
+    <string-array name="sandwich_types">
+        <item>Sandwich</item>
+        <item>Subs/Hoagies</item>
+        <item>Bánh mì</item>
+        <item>Panini</item>
+        <item>Burger</item>
+    </string-array>
+
+    <!-- Search Sandwich strings-->
+    <string name="searchDescription">
+        Tap on the dropdown to see what recipes you have saved for that sandwich type!
+    </string>
+
+
+
+
+</resources>
+
+
+
+<!-- BUTTON DEFAULT STYLE
+
+        android:fontFamily="sans-serif-condensed-medium"
+        android:backgroundTint="@color/black"
+        app:cornerRadius="0dp"
+        android:textSize="20dp"
+
+
+
+-->

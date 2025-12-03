@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateSandwichFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- MAIN TITLE -->
+            <TextView
+                android:id="@+id/menuTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="@string/app_name"
+                android:textSize="35sp"
+                android:fontFamily="sans-serif-condensed-medium" />
+
+            <!-- SANDWICH TYPE DROPDOWN -->
+            <TextView
+                android:id="@+id/sandwichTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sandwich Type"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginTop="18dp" />
+
+            <Spinner
+                android:id="@+id/sandwichTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+            <!-- PROTEIN -->
+            <TextView
+                android:id="@+id/proteinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/proteinText"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginTop="18dp"/>
+
+            <LinearLayout
+                android:id="@+id/proteinContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/proteinQues"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addProteinBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add" />
+
+            <!-- VEGETABLES -->
+            <TextView
+                android:id="@+id/veggieView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/veggieText"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginTop="18dp"/>
+
+            <LinearLayout
+                android:id="@+id/veggieContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/veggieQues"/>
+            </LinearLayout>
+
+            <!-- CHEESE -->
+            <Button
+                android:id="@+id/addVeggieBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add" />
+
+            <TextView
+                android:id="@+id/cheeseView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cheeseText"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginTop="18dp"/>
+
+            <LinearLayout
+                android:id="@+id/cheeseContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cheeseQues"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addCheeseBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add" />
+
+            <!-- SAUCE -->
+            <TextView
+                android:id="@+id/sauceView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sauceText"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginTop="18dp"/>
+
+            <LinearLayout
+                android:id="@+id/sauceContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sauceQues"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/addSauceBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Add" />
+
+            <Button
+                android:id="@+id/addRecipeBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Add Recipe!" />
+
+            <Button
+                android:id="@+id/goBackBtn"
+                style="@style/UniversalButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Go back!" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
