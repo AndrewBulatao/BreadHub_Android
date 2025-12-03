@@ -32,24 +32,61 @@ public class CreateSandwichFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_sandwhich, container, false);
 
-        // Fetching buttons and spinners
+        // Fetching Widgets
         Spinner spinner = view.findViewById(R.id.sandwichTypeSpinner);
         Button addRecipeBtn = view.findViewById(R.id.addRecipeBtn);
         Button goBackButton = view.findViewById(R.id.goBackBtn);
+        EditText sandwichNameInput = view.findViewById(R.id.sandwichNameInput);
+        EditText sandwichIngredientsInput = view.findViewById(R.id.sandwichIngredientsInput);
 
+        LinearLayout proteinContainer = view.findViewById(R.id.proteinContainer);
+        EditText proteinInput = proteinContainer.findViewById(R.id.proteinQues);
+        Button addProteinBtn = view.findViewById(R.id.addProteinBtn);
 
-        // Use string array from xml file
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.sandwich_types,
-                android.R.layout.simple_spinner_item
-        );
+        LinearLayout veggieContainer = view.findViewById(R.id.veggieContainer);
+        EditText veggieInput = veggieContainer.findViewById(R.id.veggieQues);
+        Button addVeggieBtn = view.findViewById(R.id.addVeggieBtn);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        LinearLayout cheeseContainer = view.findViewById(R.id.cheeseContainer);
+        EditText cheeseInput = cheeseContainer.findViewById(R.id.cheeseQues);
+        Button addCheeseBtn = view.findViewById(R.id.addCheeseBtn);
 
-        spinner.setAdapter(adapter);
+        LinearLayout sauceContainer = view.findViewById(R.id.sauceContainer);
+        EditText sauceInput = sauceContainer.findViewById(R.id.sauceQues);
+        Button addSauceBtn = view.findViewById(R.id.addSauceBtn);
 
-        // TODO: Make 'add buttons' add another text line
+        // Add database
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+
+        // Ensure default sandwich types exist
+        new Thread(() -> {
+            List<SandwichType> types = db.appDao().getAllTypes();
+            if (types.isEmpty()) {
+                String[] defaultTypes = {"Sandwich", "Subs/Hoagies", "Bánh mì", "Panini", "Burger"};
+                for (String tName : defaultTypes) {
+                    SandwichType t = new SandwichType(tName);
+                    t.name = tName;
+                    db.appDao().insertType(t);
+                }
+                types = db.appDao().getAllTypes();
+            }
+
+            // Update spinner on main thread
+            List<String> typeNames = new ArrayList<>();
+            for (SandwichType t : types) typeNames.add(t.name);
+
+            requireActivity().runOnUiThread(() -> {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        typeNames
+                );
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+            });
+        }).start();
+
+        // TODO: Make buttons add ingredients to databse
         // Add recipe
         addRecipeBtn.setOnClickListener(v -> {
             if (getActivity() != null){
@@ -57,6 +94,11 @@ public class CreateSandwichFragment extends Fragment {
             }
         });
 
+
+        addProteinBtn.setOnClickListener(createAddListener(proteinContainer, proteinInput));
+        addVeggieBtn.setOnClickListener(createAddListener(veggieContainer, veggieInput));
+        addCheeseBtn.setOnClickListener(createAddListener(cheeseContainer, cheeseInput));
+        addSauceBtn.setOnClickListener(createAddListener(sauceContainer, sauceInput));
 
 
         // Go back
@@ -68,6 +110,19 @@ public class CreateSandwichFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // Helper function: Sets the textboxes to ""
+    private View.OnClickListener createAddListener(LinearLayout container, EditText input) {
+        return v -> {
+            String text = input.getText().toString().trim();
+            if (!text.isEmpty()) {
+                TextView tv = new TextView(requireContext());
+                tv.setText(text);
+                container.addView(tv);
+                input.setText("");
+            }
+        };
     }
 }
 

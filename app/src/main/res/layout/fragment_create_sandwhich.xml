@@ -60,9 +60,10 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/proteinQues"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/proteinQues"/>
+                    android:hint="@string/proteinQues" />
             </LinearLayout>
 
             <Button
@@ -90,9 +91,10 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/veggieQues"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/veggieQues"/>
+                    android:hint="@string/veggieQues" />
             </LinearLayout>
 
             <!-- CHEESE -->
@@ -120,9 +122,10 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/cheeseQues"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/cheeseQues"/>
+                    android:hint="@string/cheeseQues" />
             </LinearLayout>
 
             <Button
@@ -150,9 +153,10 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/sauceQues"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sauceQues"/>
+                    android:hint="@string/sauceQues" />
             </LinearLayout>
             <Button
                 android:id="@+id/addSauceBtn"
