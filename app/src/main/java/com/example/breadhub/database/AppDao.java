@@ -18,6 +18,9 @@ public interface AppDao {
     @Query("SELECT * FROM sandwiches WHERE typeId = :typeId")
     List<Sandwich> getSandwichesForType(int typeId);
 
+    @Query("SELECT * FROM sandwiches")
+    List<Sandwich> getAllSandwiches();
+
     @Delete
     void deleteSandwich(Sandwich sandwich);
 }

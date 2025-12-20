@@ -20,11 +20,19 @@ public class Sandwich {
 
     public int typeId;
     public String name;
-    public String description;
+    public String proteins;
+    public String veggies;
+    public String cheeses;
+    public String sauces;
 
-    public Sandwich(int typeId, String name, String description) {
+    public Sandwich(int typeId, String name,
+                    String proteins, String veggies,
+                    String cheeses, String sauces) {
         this.typeId = typeId;
         this.name = name;
-        this.description = description;
+        this.proteins = proteins;
+        this.veggies = veggies;
+        this.cheeses = cheeses;
+        this.sauces = sauces;
     }
 }

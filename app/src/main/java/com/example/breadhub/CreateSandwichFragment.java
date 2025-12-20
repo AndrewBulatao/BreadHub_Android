@@ -69,7 +69,6 @@ public class CreateSandwichFragment extends Fragment {
                 types = db.appDao().getAllTypes();
             }
 
-            // Update spinner on main thread
             List<String> typeNames = new ArrayList<>();
             for (SandwichType t : types) typeNames.add(t.name);
 
@@ -84,17 +83,16 @@ public class CreateSandwichFragment extends Fragment {
             });
         }).start();
 
-        // Set add buttons
+        // Ingredient "Add" buttons
         addProteinBtn.setOnClickListener(createAddListener(proteinContainer, proteinInput));
         addVeggieBtn.setOnClickListener(createAddListener(veggieContainer, veggieInput));
         addCheeseBtn.setOnClickListener(createAddListener(cheeseContainer, cheeseInput));
         addSauceBtn.setOnClickListener(createAddListener(sauceContainer, sauceInput));
 
-        // Add recipe to database
+        // Add Recipe
         addRecipeBtn.setOnClickListener(v -> {
             String name = sandwichNameInput.getText().toString().trim();
             int typePosition = spinner.getSelectedItemPosition();
-
             if (name.isEmpty()) return;
 
             new Thread(() -> {
@@ -107,14 +105,26 @@ public class CreateSandwichFragment extends Fragment {
                 List<String> cheeses = getIngredientsFromContainer(cheeseContainer);
                 List<String> sauces = getIngredientsFromContainer(sauceContainer);
 
-                String combinedIngredients = String.join(", ", proteins) + "; "
-                        + String.join(", ", veggies) + "; "
-                        + String.join(", ", cheeses) + "; "
-                        + String.join(", ", sauces);
-
-                // Create and insert sandwich
-                Sandwich sandwich = new Sandwich(selectedType.id, name, combinedIngredients);
+                // Insert sandwich into DB
+                Sandwich sandwich = new Sandwich(
+                        selectedType.id,
+                        name,
+                        String.join(", ", proteins),
+                        String.join(", ", veggies),
+                        String.join(", ", cheeses),
+                        String.join(", ", sauces)
+                );
                 db.appDao().insertSandwich(sandwich);
+
+                // Print for testing
+                List<Sandwich> allSandwiches = db.appDao().getAllSandwiches();
+                for (Sandwich s : allSandwiches) {
+                    System.out.println("Sandwich: " + s.name +
+                            " | Proteins: " + s.proteins +
+                            " | Veggies: " + s.veggies +
+                            " | Cheeses: " + s.cheeses +
+                            " | Sauces: " + s.sauces);
+                }
 
                 // Clear UI
                 requireActivity().runOnUiThread(() -> {
@@ -127,17 +137,15 @@ public class CreateSandwichFragment extends Fragment {
             }).start();
         });
 
-        // Go back
+        // Go Back
         goBackButton.setOnClickListener(v -> {
-            if (getActivity() != null) {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
+            if (getActivity() != null) getActivity().getSupportFragmentManager().popBackStack();
         });
 
         return view;
     }
 
-    // Helper: Add ingredient from EditText to container
+    // Helper function to add ingredients to list
     private View.OnClickListener createAddListener(LinearLayout container, EditText input) {
         return v -> {
             String text = input.getText().toString().trim();
@@ -150,7 +158,7 @@ public class CreateSandwichFragment extends Fragment {
         };
     }
 
-    // Helper: Get all TextViews from container
+    // Extract ingredients from LinearLayout
     private List<String> getIngredientsFromContainer(LinearLayout container) {
         List<String> ingredients = new ArrayList<>();
         for (int i = 0; i < container.getChildCount(); i++) {
