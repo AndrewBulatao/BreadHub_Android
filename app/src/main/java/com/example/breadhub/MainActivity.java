@@ -9,7 +9,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // make sure this has a fragment container
+        setContentView(R.layout.activity_main);
 
         // First thing that should open is the Menu Fragment
         if (savedInstanceState == null) {

@@ -21,6 +21,8 @@ public class MenuFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
+        // TODO: Add inverse colors button, settings button?
+
         // Create Sandwich button
         Button createSandButt = view.findViewById(R.id.createSandButt);
         createSandButt.setOnClickListener(v -> {

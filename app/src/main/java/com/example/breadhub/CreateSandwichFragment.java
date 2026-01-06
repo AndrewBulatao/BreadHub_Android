@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Check go back button and see if other buttons are responsive.
 // TODO: Also check if information on sandwiches gets uploaded into databases
 
 public class CreateSandwichFragment extends Fragment {
@@ -148,6 +147,8 @@ public class CreateSandwichFragment extends Fragment {
                         .show();
             }else{
                 Toast.makeText(requireContext(), "Recipe added!", Toast.LENGTH_SHORT).show();
+                // TODO: Insert arrays into db
+
                 // Clear input texts
                 sandwichNameInput.setText("");
                 proteinInput.setText("");
