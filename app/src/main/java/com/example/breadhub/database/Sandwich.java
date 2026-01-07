@@ -28,6 +28,8 @@ public class Sandwich {
      * 5 = Burgers
      */
 
+    // TODO: Convert strings to List<String> and then make a converter for them
+    // A converter for Array -> String and another for String -> Array
     @NonNull
     public String name;
 

@@ -27,6 +27,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
+                            // Room doesnt allow databse operations on the main UI thread
                             new Thread(() -> {
                                 AppDao dao = getInstance(context).appDao();
                                 dao.insertType(new SandwichType("sandwiches"));

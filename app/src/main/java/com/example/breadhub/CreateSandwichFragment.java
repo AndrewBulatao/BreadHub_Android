@@ -15,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.TypeConverter;
 
+import com.example.breadhub.database.AppDao;
 import com.example.breadhub.database.AppDatabase;
 
 import android.util.Log;
@@ -35,6 +37,9 @@ public class CreateSandwichFragment extends Fragment {
     private final List<String> cheeses = new ArrayList<>();
     private final List<String> sauces = new ArrayList<>();
 
+    // Database
+    private AppDao dao;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,7 +47,6 @@ public class CreateSandwichFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_create_sandwhich, container, false);
-
         // Widgets
         Spinner spinner = view.findViewById(R.id.sandwichTypeSpinner);
         Button addRecipeBtn = view.findViewById(R.id.addRecipeBtn);
@@ -72,7 +76,7 @@ public class CreateSandwichFragment extends Fragment {
         // Database
         AppDatabase db = AppDatabase.getInstance(requireContext());
 
-        // Ensure default sandwich types exist
+
 
         // Ingredient "Add" buttons
         addProteinBtn.setOnClickListener(v -> {
